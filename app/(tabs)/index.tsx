@@ -1,15 +1,56 @@
-import { View, Text, Image, StyleSheet, Platform } from 'react-native';
+import { View, Text, Image, StyleSheet, Platform, SafeAreaView } from 'react-native';
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { colors } from '@/themes/colors';
 
-export default function HomeScreen() {
+import { HomeListing } from '../../screens/home/home';
+import { ListingScreen } from '../../screens/roomListing/listing';
+import { RoomDetailsScreen } from '../../screens/roomDetails/room';
+
+
+
+export default function App() {
+
+  const Stack: any = createStackNavigator();
+
   return (
-    <View style={styles.container}>
-       <Text>Welcome to the Home Page!</Text>
-     </View>
+
+    <NavigationContainer>
+
+      <Stack.Navigator initialRouteName="Home" >
+
+        <Stack.Screen name="Home" component={HomeListing}
+          options={{
+            headerShown: false,
+          }}
+        />
+
+        <Stack.Screen
+          name="Listing"
+          component={ListingScreen}
+          options={{
+            headerTitle: 'Listing',
+            headerStyle: { backgroundColor: colors.BLUE },
+            headerTitleStyle: { color: '#fff', fontWeight: 'bold', fontSize: 25, },
+            headerStatusBarHeight: 25,
+          }}
+        />
+
+        <Stack.Screen
+          name="RoomDetails"
+          component={RoomDetailsScreen}
+          options={{
+            headerTitle: 'Room Details',
+            headerStyle: { backgroundColor: '#3f51b5' },
+            headerTitleStyle: { color: '#fff', fontWeight: 'bold' },
+            headerStatusBarHeight: 25,
+          }}
+        />
+
+      </Stack.Navigator>
+
+    </NavigationContainer>
 
   );
 }
