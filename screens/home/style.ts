@@ -16,7 +16,7 @@ export const styles = StyleSheet.create({
     },
     bodyContainer: {
         paddingHorizontal: units.width / 14,
-        marginTop: units.height / 30,
+        marginTop: units.height / 90,
         marginBottom: units.height / 101,
     },
     title: {

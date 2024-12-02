@@ -12,6 +12,7 @@ import React, { useState } from 'react';
 import { styles } from './style';
 
 import { Header } from '../../components/header/header';
+import { routes } from '@/navigation/routes';
 
 export const HomeListing = ({ navigation }) => {
 
@@ -46,11 +47,11 @@ export const HomeListing = ({ navigation }) => {
       );
     
     const onClickViewAll = (data) => {
-        navigation.navigate('Listing', { roomType: data });
+        navigation.navigate(routes.ROOMLIST, { roomType: data });
     };
 
     const onClickViewRoom = (item) => {
-        navigation.navigate('RoomDetails', { room: item })
+        navigation.navigate(routes.ROOMDETAIL, { room: item })
     };
 
     return (

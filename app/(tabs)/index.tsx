@@ -3,57 +3,85 @@ import { View, Text, Image, StyleSheet, Platform, SafeAreaView } from 'react-nat
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { colors } from '@/themes/colors';
+import LoginScreen from './login';
 
 import { HomeListing } from '../../screens/home/home';
 import { ListingScreen } from '../../screens/roomListing/listing';
 import { RoomDetailsScreen } from '../../screens/roomDetails/room';
 
+import { Provider } from 'react-redux';
+import {persistStore} from 'redux-persist';
+import store from '../../context/store';
+import {PersistGate} from 'redux-persist/integration/react';
+
+import AppNavigator from '../../navigation/AppNavigation';
+
+  // export default function App() {
+  //   const perStore = persistStore(store);
+
+  //   const Stack: any = createStackNavigator();
+
+  //   return (
+
+  //     <Provider store={store}>
+  //       <PersistGate loading={null} persistor={perStore}>
+
+  //     {/* //   <PersistGate persistor={perStore}> */}
 
 
-export default function App() {
+  //       <NavigationContainer>
 
-  const Stack: any = createStackNavigator();
+  //         <Stack.Navigator initialRouteName="Home" >
 
-  return (
+  //           <Stack.Screen name="Home" component={HomeListing}
+  //             options={{
+  //               headerShown: false,
+  //             }}
+  //           />
 
-    <NavigationContainer>
+  //           <Stack.Screen
+  //             name="LoginScreen"
+  //             component={LoginScreen}
+  //             options={{
+  //               headerTitle: 'Login',
+  //               headerStyle: { backgroundColor: '#3f51b5' },
+  //               headerTitleStyle: { color: '#fff', fontWeight: 'bold' },
+  //             }}
+  //           />
 
-      <Stack.Navigator initialRouteName="Home" >
+  //           <Stack.Screen
+  //             name="Listing"
+  //             component={ListingScreen}
+  //             options={{
+  //               headerTitle: 'Listing',
+  //               headerStyle: { backgroundColor: colors.BLUE },
+  //               headerTitleStyle: { color: '#fff', fontWeight: 'bold', fontSize: 25, },
+  //               headerStatusBarHeight: 25,
+  //             }}
+  //           />
 
-        <Stack.Screen name="Home" component={HomeListing}
-          options={{
-            headerShown: false,
-          }}
-        />
+  //           <Stack.Screen
+  //             name="RoomDetails"
+  //             component={RoomDetailsScreen}
+  //             options={{
+  //               headerTitle: 'Room Details',
+  //               headerStyle: { backgroundColor: '#3f51b5' },
+  //               headerTitleStyle: { color: '#fff', fontWeight: 'bold' },
+  //               headerStatusBarHeight: 25,
+  //             }}
+  //           />
 
-        <Stack.Screen
-          name="Listing"
-          component={ListingScreen}
-          options={{
-            headerTitle: 'Listing',
-            headerStyle: { backgroundColor: colors.BLUE },
-            headerTitleStyle: { color: '#fff', fontWeight: 'bold', fontSize: 25, },
-            headerStatusBarHeight: 25,
-          }}
-        />
+  //         </Stack.Navigator>
 
-        <Stack.Screen
-          name="RoomDetails"
-          component={RoomDetailsScreen}
-          options={{
-            headerTitle: 'Room Details',
-            headerStyle: { backgroundColor: '#3f51b5' },
-            headerTitleStyle: { color: '#fff', fontWeight: 'bold' },
-            headerStatusBarHeight: 25,
-          }}
-        />
+  //       </NavigationContainer>
 
-      </Stack.Navigator>
+  //       {/* // </PersistGate> */}
+  //       </PersistGate>
 
-    </NavigationContainer>
+  //       </Provider> 
 
-  );
-}
+  //   );
+  // }
 
 const styles = StyleSheet.create({
   container: {
@@ -78,3 +106,24 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
 });
+
+
+///
+
+
+const App = () => {
+
+  const perStore = persistStore(store);
+
+
+  return (
+    <Provider store={store}>
+      <PersistGate persistor={perStore}>
+        <AppNavigator />
+        {/* <FlashMessage position="top" /> */}
+      </PersistGate>
+    </Provider>
+  );
+};
+
+export default App;
