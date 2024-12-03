@@ -3,8 +3,25 @@ import React from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, SafeAreaView, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
+
+import { useSelector, useDispatch } from 'react-redux';
+import { increment, decrement, selectCount } from '../../../context/cSlice';
+import { colors } from '@/app/themes/colors';
+
+
 export const RoomDetailsScreen = ({ route, navigation }) => {
   const { room } = route.params;
+
+  const count = useSelector(selectCount);
+  const dispatch = useDispatch();
+  console.log('count',count);
+
+  const onClickCheck = () => {
+    console.log('onClickCheck before', count);
+    dispatch(increment());
+    console.log('onClickCheck after', count);
+
+  }
 
   return (
     <SafeAreaView style={styles.Safecontainer}>
@@ -30,6 +47,10 @@ export const RoomDetailsScreen = ({ route, navigation }) => {
             ✔️ {amenity}
           </Text>
         ))}
+
+        <TouchableOpacity style={styles.button} onPress={() => onClickCheck()}>
+          <Text style={styles.buttonText}>Details</Text>
+        </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
   );
@@ -99,4 +120,15 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#007BFF',
   },
+  button: {
+    marginTop: 10,
+    backgroundColor: colors.BLUE,
+    padding: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+},
+buttonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+},
 });

@@ -9,18 +9,36 @@ import {
   ActivityIndicator,
 } from 'react-native';
 // import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from '../../context/authSlice';
+import { loginUser } from '../../../context/authSlice';
 import { useRouter } from 'expo-router';
 
+
+import { useSelector, useDispatch } from 'react-redux';
+import { increment, decrement, selectCount } from '../../../context/cSlice';
+
 const LoginScreen = () => {
+
+
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  // const dispatch = useDispatch();
   const router = useRouter();
+
+  // const authState = useSelector((state: any) => state.auth); // Access auth state
+  // const dispatch = useDispatch();
+  // console.log('Auth State:', authState);
 
   // const { loading, error } = useSelector((state: any) => state.auth);
 
+
+  const count = useSelector(selectCount);
+  const dispatch = useDispatch();
+  console.log('count',count);
+
   const handleLogin = async () => {
+      dispatch(increment());
+      console.log('after dis',count);
+
     if (!email || !password) {
       Alert.alert('Error', 'Please enter both email and password');
       return;
@@ -34,6 +52,8 @@ const LoginScreen = () => {
     //   Alert.alert('Error', resultAction.payload || 'Login failed');
     // }
   };
+
+  const loading = true;
 
   return (
     <View style={styles.container}>
@@ -53,9 +73,9 @@ const LoginScreen = () => {
         onChangeText={setPassword}
       />
       {/* {error && <Text style={styles.error}>{error}</Text>} */}
-      {/* <TouchableOpacity style={styles.button} onPress={handleLogin} disabled={loading}> */}
-        {/* {loading ? <ActivityIndicator color="#fff" /> : <Text style={styles.buttonText}>Login</Text>} */}
-      {/* </TouchableOpacity> */}
+      <TouchableOpacity style={styles.button} onPress={handleLogin} disabled={loading}>
+        {loading ? <ActivityIndicator color="#fff" /> : <Text style={styles.buttonText}>Login</Text>}
+      </TouchableOpacity>
     </View>
   );
 };

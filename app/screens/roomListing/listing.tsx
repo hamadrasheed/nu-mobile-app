@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, FlatList, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { styles as customStyles } from './style';
 import { Ionicons } from '@expo/vector-icons'; // For Back Icon
-import { routes } from '@/navigation/routes';
+import { routes } from '@/app/navigation/routes';
 
 const rooms = [
   { id: 1, name: 'Deluxe Room', status: 'Available', price: '$100', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbY42Aa3LQiKSDfMbPn-FzFq3PMtQQTLT0Ig&s' },

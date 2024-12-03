@@ -11,8 +11,8 @@ import {
 import React, { useState } from 'react';
 import { styles } from './style';
 
-import { Header } from '../../components/header/header';
-import { routes } from '@/navigation/routes';
+import { Header } from '../../../components/header/header';
+import { routes } from '@/app/navigation/routes';
 
 export const HomeListing = ({ navigation }) => {
 

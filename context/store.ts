@@ -1,30 +1,36 @@
-// import { configureStore} from '@reduxjs/toolkit';
-// import authReducer from './authSlice';
+// import { configureStore } from '@reduxjs/toolkit';
+// import { persistReducer } from 'redux-persist';
+// import storage from 'redux-persist/lib/storage'; // Local storage
+// import { combineReducers } from 'redux';
+// import { persistStore } from 'redux-persist';
+// import authReducer from './authSlice'; // Example reducer
 
+// const persistConfig = {
+//   key: 'root',
+//   storage,
+// };
 
-// const store = configureStore({
-//   reducer: {
-//     auth: authReducer, // Add your reducers here
-//   },
-//   middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
+// const rootReducer = combineReducers({
+//   auth: authReducer, // Add all reducers here
 // });
 
-// export type RootState = ReturnType<typeof store.getState>;
-// export type AppDispatch = typeof store.dispatch;
+// const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+// const store = configureStore({
+//   reducer: persistedReducer,
+//   middleware: (getDefaultMiddleware) =>
+//     getDefaultMiddleware({
+//       serializableCheck: false,
+//     }),
+// });
 
 // export default store;
 
-
-import {configureStore} from '@reduxjs/toolkit';
-import {customPersistReducer} from './customPersistReducer';
+import { configureStore } from '@reduxjs/toolkit';
+import counterReducer from './cSlice';
 
 export const store = configureStore({
-  reducer: customPersistReducer,
-  middleware: getDefaultMiddleware =>
-    getDefaultMiddleware({
-      serializableCheck: false,
-    }),
+  reducer: {
+    counter: counterReducer,
+  },
 });
-
-export default store;
-

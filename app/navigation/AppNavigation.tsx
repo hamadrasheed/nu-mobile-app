@@ -4,6 +4,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 // import {useSelector} from 'react-redux';
 // import AuthNavigator from './';
 import HomeNavigator from './HomeNavigator';
+import BottomNavBar from './bottomNavigation';
 
 const Stack = createNativeStackNavigator();
 
@@ -14,6 +15,8 @@ const AppNavigator = () => {
   return (
     <NavigationContainer>
       <HomeNavigator />
+      <BottomNavBar />
+
       {/* {isLogin ? <HomeNavigator /> : <AuthNavigator />} */}
     </NavigationContainer>
   );
