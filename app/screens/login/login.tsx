@@ -8,13 +8,10 @@ import {
   Alert,
   ActivityIndicator,
 } from 'react-native';
-// import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../../../context/authSlice';
 import { useRouter } from 'expo-router';
 
-
 import { useSelector, useDispatch } from 'react-redux';
-import { increment, decrement, selectCount } from '../../../context/cSlice';
 
 const LoginScreen = () => {
 
@@ -23,37 +20,32 @@ const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
-
-  // const authState = useSelector((state: any) => state.auth); // Access auth state
-  // const dispatch = useDispatch();
-  // console.log('Auth State:', authState);
-
-  // const { loading, error } = useSelector((state: any) => state.auth);
-
-
-  const count = useSelector(selectCount);
   const dispatch = useDispatch();
-  console.log('count',count);
+
+  const isLogin = useSelector((selector: any) => selector.auth);
+
+
 
   const handleLogin = async () => {
-      dispatch(increment());
-      console.log('after dis',count);
 
     if (!email || !password) {
       Alert.alert('Error', 'Please enter both email and password');
       return;
     }
 
-    // const resultAction = await dispatch(loginUser({ email, password }));
-    // if (loginUser.fulfilled.match(resultAction)) {
-    //   Alert.alert('Success', 'Login Successful');
-    //   router.push('/'); // Navigate to Home
-    // } else {
-    //   Alert.alert('Error', resultAction.payload || 'Login failed');
-    // }
+    const resultAction = await dispatch(loginUser({ email, password }));
+
+    if (loginUser.fulfilled.match(resultAction)) {      
+      Alert.alert('Success', 'Login Successful');
+      setTimeout(() => router.push('/'), 1000);
+      router.push('/');
+    } else {
+      Alert.alert('Error', resultAction.payload || 'Login failed');
+    }
+
   };
 
-  const loading = true;
+  const { loading } = isLogin;
 
   return (
     <View style={styles.container}>

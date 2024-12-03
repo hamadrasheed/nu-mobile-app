@@ -6,12 +6,16 @@ export const loginUser: any = createAsyncThunk(
   'auth/loginUser',
   async ({ email, password }: { email: string; password: string }, { rejectWithValue }) => {
     try {
-      const response = await axios.post('https://your-api-url.com/login', {
+
+      const response = await axios.post(`${process.env.EXPO_PUBLIC_SERVER_URL}/user/login`, {
         email,
         password,
       });
+
       return response.data; // Example: { user, token }
+
     } catch (error) {
+      console.log('error',error);
       return rejectWithValue(error.response?.data?.message || 'Login failed');
     }
   }
@@ -20,14 +24,12 @@ export const loginUser: any = createAsyncThunk(
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
-    user: null,
     token: null,
     loading: false,
     error: null,
   },
   reducers: {
     logout: (state) => {
-      state.user = null;
       state.token = null;
     },
   },
@@ -39,8 +41,7 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload.user;
-        state.token = action.payload.token;
+        state.token = action?.payload?.data?.token;
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;

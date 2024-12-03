@@ -5,22 +5,14 @@ import { Ionicons } from '@expo/vector-icons';
 
 
 import { useSelector, useDispatch } from 'react-redux';
-import { increment, decrement, selectCount } from '../../../context/cSlice';
 import { colors } from '@/app/themes/colors';
 
 
 export const RoomDetailsScreen = ({ route, navigation }) => {
   const { room } = route.params;
 
-  const count = useSelector(selectCount);
-  const dispatch = useDispatch();
-  console.log('count',count);
 
   const onClickCheck = () => {
-    console.log('onClickCheck before', count);
-    dispatch(increment());
-    console.log('onClickCheck after', count);
-
   }
 
   return (
