@@ -16,7 +16,7 @@ const BottomNavBar = () => {
       {/* Home Button */}
       <TouchableOpacity style={styles.navItem} onPress={() => router.push('/')}>
         <Ionicons name="home-outline" size={24} color="#fff" />
-        <Text style={styles.navText}>Home</Text>
+        <Text style={styles.navText}>Rooms</Text>
       </TouchableOpacity>
 
       {/* Login Button */}
@@ -27,7 +27,15 @@ const BottomNavBar = () => {
         <Text style={styles.navText}>Login</Text>
       </TouchableOpacity>
 
-      {/* Add More Buttons as Needed */}
+      {/* Register Button */}
+      <TouchableOpacity
+        style={styles.navItem}
+        onPress={() => navigation.navigate(routes.REGISTER)} // Ensure routes.REGISTER points to your Register screen
+      >
+        <Ionicons name="person-add-outline" size={24} color="#fff" />
+        <Text style={styles.navText}>Register</Text>
+      </TouchableOpacity>
+
     </View>
   );
 };

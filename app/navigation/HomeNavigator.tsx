@@ -7,16 +7,18 @@ import Login from '../screens/login/login';
 import { HomeListing } from '../screens/home/home';
 import { RoomDetailsScreen } from '../screens/roomDetails/room';
 import { ListingScreen } from '../screens/roomListing/listing';
+import { RegisterPage } from '../screens/register/register';
 
 const Stack: any = createNativeStackNavigator();
 
 const HomeNavigator = () => {
-  console.log('HIT in home nav');
-    return (
+
+  return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
 
       <Stack.Screen name={routes.HOMETAB} component={HomeListing} />
       <Stack.Screen name={routes.LOGIN} component={Login} />
+      <Stack.Screen name={routes.REGISTER} component={RegisterPage} />
       <Stack.Screen name={routes.ROOMLIST} component={ListingScreen} />
       <Stack.Screen name={routes.ROOMDETAIL} component={RoomDetailsScreen} />
 

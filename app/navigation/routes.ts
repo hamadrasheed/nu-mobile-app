@@ -1,3 +1,5 @@
+import { REGISTER } from "redux-persist";
+
 export const routes = {
   LOGIN: 'LoginScreen',
   REGISTER: 'RegisterScreen',
