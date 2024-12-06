@@ -122,5 +122,28 @@ export const styles = StyleSheet.create({
       buttonText: {
         color: '#fff',
         fontWeight: 'bold',
-      }
+      },
+      loadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#fff', // Background color for the screen
+      },
+      loadingText: {
+        marginTop: 10,
+        fontSize: 16,
+        color: '#555', // Neutral gray color for text
+      },
+      errorContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#fff', // Background color for the screen
+        paddingHorizontal: 20, // To avoid text clipping on smaller screens
+      },
+      errorText: {
+        fontSize: 16,
+        color: '#ff4d4d', // Red color to indicate error
+        textAlign: 'center', // Center align for better readability
+      },
 });

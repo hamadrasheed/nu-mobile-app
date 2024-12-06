@@ -6,13 +6,15 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { colors } from '@/app/themes/colors';
+import { routes } from '@/app/navigation/routes';
 
 
 export const RoomDetailsScreen = ({ route, navigation }) => {
+
   const { room } = route.params;
 
-
-  const onClickCheck = () => {
+  const onClickCheckAvailablity = () => {
+      navigation.navigate(routes.ROOMAVAILABLE, { room });
   }
 
   return (
@@ -34,14 +36,12 @@ export const RoomDetailsScreen = ({ route, navigation }) => {
         <Text style={styles.sectionTitle}>Description</Text>
         <Text style={styles.description}>{room.description}</Text>
         <Text style={styles.sectionTitle}>Amenities</Text>
-        {room?.amenities?.map((amenity, index) => (
-          <Text key={index} style={styles.amenity}>
-            ✔️ {amenity}
-          </Text>
-        ))}
+          {room.freeWifi && <Text style={styles.amenity}>✔️ Free WiFi</Text>}
+          {room.freeCancellation && <Text style={styles.amenity}>✔️ Free Cancellation</Text>}
+          {room.breakfastIncluded && <Text style={styles.amenity}>✔️ Free Breakfast</Text>}
 
-        <TouchableOpacity style={styles.button} onPress={() => onClickCheck()}>
-          <Text style={styles.buttonText}>Details</Text>
+        <TouchableOpacity style={styles.button} onPress={() => onClickCheckAvailablity()}>
+          <Text style={styles.buttonText}>Check Availablity</Text>
         </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>

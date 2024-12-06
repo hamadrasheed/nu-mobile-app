@@ -1,40 +1,39 @@
-import React from 'react';
-import { View, Text, FlatList, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, Text, FlatList, Image, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchRoomsByType } from '../../../context/roomSlice'; // Import the new thunk
 import { styles as customStyles } from './style';
 import { Ionicons } from '@expo/vector-icons'; // For Back Icon
 import { routes } from '@/app/navigation/routes';
 
-const rooms = [
-  { id: 1, name: 'Deluxe Room', status: 'Available', price: '$100', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbY42Aa3LQiKSDfMbPn-FzFq3PMtQQTLT0Ig&s' },
-  { id: 2, name: 'Executive Room', status: 'Cleaning', price: '$150', image: 'https://via.placeholder.com/150' },
-  { id: 3, name: 'Suite', status: 'Do Not Disturb', price: '$250', image: 'https://via.placeholder.com/150' },
-  { id: 4, name: 'Deluxe Room', status: 'Available', price: '$100', image: 'https://via.placeholder.com/150' },
-  { id: 5, name: 'Executive Room', status: 'Cleaning', price: '$150', image: 'https://via.placeholder.com/150' },
-  { id: 6, name: 'Suite', status: 'Do Not Disturb', price: '$250', image: 'https://via.placeholder.com/150' },
-  { id: 7, name: 'Deluxe Room', status: 'Available', price: '$100', image: 'https://via.placeholder.com/150' },
-  { id: 8, name: 'Executive Room', status: 'Cleaning', price: '$150', image: 'https://via.placeholder.com/150' },
-  { id: 9, name: 'Suite', status: 'Do Not Disturb', price: '$250', image: 'https://via.placeholder.com/150' },
-];
-
 export const ListingScreen = ({ route, navigation }) => {
-  const onClickViewRoom = (item) => {
-    navigation.navigate(routes.ROOMDETAIL, { room: item });
-  };
-
+  const dispatch = useDispatch();
+  const { filteredRooms, loading, error } = useSelector((state: any) => state.rooms); // Select filtered rooms from Redux store
+  // console.log('filteredRooms',filteredRooms);
   const dynamicNameMapper = {
     executive: 'Executive',
     delux: 'Delux',
     standard: 'Standard',
   };
-
+  console.log('route?.params',route?.params);
   const roomName = dynamicNameMapper[`${route?.params?.roomType}`] || 'Rooms';
+
+  useEffect(() => {
+    if (route?.params?.roomType) {
+      dispatch(fetchRoomsByType(route.params.roomTypeId)); // Fetch rooms by type
+    }
+  }, [dispatch, route?.params?.roomType]);
+
+  const onClickViewRoom = (item) => {
+    navigation.navigate(routes.ROOMDETAIL, { room: item });
+  };
 
   const renderRoom = ({ item }) => (
     <View style={customStyles.card}>
       <Image source={{ uri: item.image }} style={customStyles.image} />
       <View style={customStyles.info}>
         <Text style={customStyles.name}>{item.name}</Text>
-        <Text style={customStyles.status}>Status: {item.status}</Text>
+        <Text style={customStyles.status}>Status: {item?.status?.name}</Text>
         <Text style={customStyles.price}>Price: {item.price}</Text>
         <TouchableOpacity style={customStyles.button} onPress={() => onClickViewRoom(item)}>
           <Text style={customStyles.buttonText}>Details</Text>
@@ -42,6 +41,23 @@ export const ListingScreen = ({ route, navigation }) => {
       </View>
     </View>
   );
+
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#3f51b5" />
+        <Text style={styles.loadingText}>Loading rooms...</Text>
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={styles.errorContainer}>
+        <Text style={styles.errorText}>{error}</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -55,7 +71,7 @@ export const ListingScreen = ({ route, navigation }) => {
 
       {/* Room List */}
       <FlatList
-        data={rooms}
+        data={filteredRooms}
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderRoom}
       />
@@ -83,5 +99,24 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: '#fff',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    marginTop: 10,
+    fontSize: 16,
+    color: '#555',
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  errorText: {
+    fontSize: 16,
+    color: '#ff4d4d',
   },
 });

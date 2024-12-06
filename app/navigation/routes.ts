@@ -3,8 +3,9 @@ import { REGISTER } from "redux-persist";
 export const routes = {
   LOGIN: 'LoginScreen',
   REGISTER: 'RegisterScreen',
-  ROOMLIST: 'RoomListing',
-  ROOMDETAIL: 'RoomDetail',
+  ROOMLIST: 'RoomListingScreen',
+  ROOMDETAIL: 'RoomDetailScreen',
+  ROOMAVAILABLE: 'RoomAvailableScreen',
   HOMETAB: 'HomeTabScreen', // HomeListing
   //
   PROFILETAB: 'ProfieTabScreen',

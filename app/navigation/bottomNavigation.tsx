@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 // import moduleName from '../screens';
 import { routes } from '../../app/navigation/routes'; // Ensure this points to your routes file
@@ -8,13 +7,12 @@ import { routes } from '../../app/navigation/routes'; // Ensure this points to y
 import { useNavigation } from '@react-navigation/native';
 
 const BottomNavBar = () => {
-  const router: any = useRouter();
   const navigation: any = useNavigation();
 
   return (
     <View style={styles.navbar}>
       {/* Home Button */}
-      <TouchableOpacity style={styles.navItem} onPress={() => router.push('/')}>
+      <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate(routes.HOMETAB)}>
         <Ionicons name="home-outline" size={24} color="#fff" />
         <Text style={styles.navText}>Rooms</Text>
       </TouchableOpacity>

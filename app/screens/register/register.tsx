@@ -1,3 +1,4 @@
+import { Header } from '@/components/header/header';
 import React, { useState } from 'react';
 import {
   View,
@@ -7,6 +8,7 @@ import {
   StyleSheet,
   Alert,
   ScrollView,
+  SafeAreaView
 } from 'react-native';
 
 export const RegisterPage = () => {
@@ -47,87 +49,96 @@ export const RegisterPage = () => {
     }
 
     Alert.alert('Success', `Welcome ${firstName} ${lastName}!`);
-    // Add your signup logic here (e.g., API call)
+
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Register</Text>
+    <SafeAreaView style={styles.HeaderContainer}>
 
-      {/* First Name */}
-      <TextInput
-        style={styles.input}
-        placeholder="First Name"
-        value={firstName}
-        onChangeText={setFirstName}
-      />
+      <Header title="Lexus NU" />
+      <ScrollView contentContainerStyle={styles.container}>
 
-      {/* Last Name */}
-      <TextInput
-        style={styles.input}
-        placeholder="Last Name"
-        value={lastName}
-        onChangeText={setLastName}
-      />
+        <Text style={styles.title}>Register</Text>
 
-      {/* Email */}
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-      />
+        {/* First Name */}
+        <TextInput
+          style={styles.input}
+          placeholder="First Name"
+          value={firstName}
+          onChangeText={setFirstName}
+        />
 
-      {/* Password */}
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-      
-      {/* Radio Buttons for User Type */}
-      <View style={styles.radioGroup}>
-        <TouchableOpacity
-          style={styles.radioButton}
-          onPress={() => setUserType('guest')}
-        >
-          <View
-            style={[
-              styles.radioCircle,
-              userType === 'guest' && styles.radioSelected,
-            ]}
-          />
-          <Text style={styles.radioText}>Guest</Text>
+        {/* Last Name */}
+        <TextInput
+          style={styles.input}
+          placeholder="Last Name"
+          value={lastName}
+          onChangeText={setLastName}
+        />
+
+        {/* Email */}
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+        />
+
+        {/* Password */}
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+        />
+
+        {/* Radio Buttons for User Type */}
+  {/*       
+        <View style={styles.radioGroup}>
+          <TouchableOpacity
+            style={styles.radioButton}
+            onPress={() => setUserType('guest')}
+          >
+            <View
+              style={[
+                styles.radioCircle,
+                userType === 'guest' && styles.radioSelected,
+              ]}
+            />
+            <Text style={styles.radioText}>Guest</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.radioButton}
+            onPress={() => setUserType('staff')}
+          >
+            <View
+              style={[
+                styles.radioCircle,
+                userType === 'staff' && styles.radioSelected,
+              ]}
+            />
+            <Text style={styles.radioText}>Staff</Text>
+          </TouchableOpacity>
+        </View> */}
+
+
+        {/* Signup Button */}
+        <TouchableOpacity style={styles.signupButton} onPress={handleSignup}>
+          <Text style={styles.signupButtonText}>Create Account</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.radioButton}
-          onPress={() => setUserType('staff')}
-        >
-          <View
-            style={[
-              styles.radioCircle,
-              userType === 'staff' && styles.radioSelected,
-            ]}
-          />
-          <Text style={styles.radioText}>Staff</Text>
-        </TouchableOpacity>
-      </View>
-
-
-      {/* Signup Button */}
-      <TouchableOpacity style={styles.signupButton} onPress={handleSignup}>
-        <Text style={styles.signupButtonText}>Create Account</Text>
-      </TouchableOpacity>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 export default RegisterPage;
 
 const styles = StyleSheet.create({
+  HeaderContainer: {
+    flex: 1,
+  },
   container: {
     flexGrow: 1,
     justifyContent: 'center',

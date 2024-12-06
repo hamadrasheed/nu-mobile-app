@@ -13,7 +13,7 @@ import { styles } from './style';
 
 import { routes } from '@/app/navigation/routes';
 
-export const RoomsContainer = ({ rooms, roomName, roomType, navigation }) => {
+export const RoomsContainer = ({ rooms, roomName, roomType, roomTypeId, navigation }) => {
 
     const renderRoom = ({ item }) => (
 
@@ -29,6 +29,7 @@ export const RoomsContainer = ({ rooms, roomName, roomType, navigation }) => {
                 <Text style={styles.price}>Price: {item.price}</Text>
                 {item.freeWifi && <Text style={styles.amenity}>✔️ Free WiFi</Text>}
                 {item.freeCancellation && <Text style={styles.amenity}>✔️ Free Cancellation</Text>}
+                {item.breakfastIncluded && <Text style={styles.amenity}>✔️ Free Breakfast</Text>}
 
                 <TouchableOpacity style={styles.button}
                     onPress={() => onClickViewRoom(item)}
@@ -39,8 +40,8 @@ export const RoomsContainer = ({ rooms, roomName, roomType, navigation }) => {
         </View>
     );
 
-    const onClickViewAll = (data) => {
-        navigation.navigate(routes.ROOMLIST, { roomType: data });
+    const onClickViewAll = (data, roomTypeId) => {
+        navigation.navigate(routes.ROOMLIST, { roomType: data, roomTypeId: roomTypeId });
     };
 
     const onClickViewRoom = (item) => {
@@ -52,7 +53,7 @@ export const RoomsContainer = ({ rooms, roomName, roomType, navigation }) => {
         <View>
             <View style={styles.cardContainer}>
                 <Text style={styles.cardTitle}>{roomName}</Text>
-                <TouchableOpacity onPress={() => onClickViewAll(roomType)}>
+                <TouchableOpacity onPress={() => onClickViewAll(roomType, roomTypeId)}>
                     <Text style={styles.viewButton}>View All {'>'} </Text>
                 </TouchableOpacity>
             </View>

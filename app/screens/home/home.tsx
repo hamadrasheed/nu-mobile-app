@@ -1,47 +1,66 @@
+import React, { useEffect } from 'react';
 import {
-    Image,
-    StyleSheet,
-    Text,
-    View,
-    SafeAreaView,
-    TouchableOpacity,
-    FlatList,
-    ScrollView,
+  View,
+  SafeAreaView,
+  ScrollView,
+  ActivityIndicator,
+  Text,
 } from 'react-native';
-import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchRooms } from '../../../context/roomSlice'; 
 import { styles } from './style';
-
 import { Header } from '@/components/header/header';
-import { routes } from '@/app/navigation/routes';
 import { RoomsContainer } from '../../../components/roomContainer/homeContainers';
 
 export const HomeListing = ({ navigation }) => {
+  const dispatch = useDispatch();
+  const { rooms, loading, error } = useSelector((state: any) => state.rooms);
+    
+  // Fetch rooms on component mount
+  useEffect(() => {
+    dispatch(fetchRooms());
+  }, [dispatch]);
 
-    const rooms = [
-        { id: 1, name: 'Atlantis The Palm', price: '$215', distance: '11 miles from city center', rating: '8.7 Excellent', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbY42Aa3LQiKSDfMbPn-FzFq3PMtQQTLT0Ig&s', freeWifi: true, freeCancellation: true },
-        { id: 2, name: 'Sofitel Dubai Jumeirah Beach', price: '$190', distance: '12 miles from city center', rating: '9.0 Good', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbY42Aa3LQiKSDfMbPn-FzFq3PMtQQTLT0Ig&s', freeWifi: true, freeCancellation: false },
-        { id: 3, name: 'Flora Al Barsha Hotel At The Mall', price: '$109', distance: '15 miles from city center', rating: '8.5 Very Good', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbY42Aa3LQiKSDfMbPn-FzFq3PMtQQTLT0Ig&s', freeWifi: true, freeCancellation: true },
-    ];
-
+  // Display loading spinner
+  if (loading) {
     return (
-
-        <SafeAreaView style={styles.container}>
-            
-            <ScrollView showsVerticalScrollIndicator={false}>
-
-                <Header title="Lexus NU" />
-
-                <View style={styles.bodyContainer}>
-
-                    <RoomsContainer roomType='executive' roomName='Executive Rooms' rooms={rooms} navigation={navigation} />
-                    <RoomsContainer roomType='delux' roomName='Deluxe Rooms' rooms={rooms} navigation={navigation} />
-                    <RoomsContainer roomType='standard' roomName='Standard Rooms' rooms={rooms} navigation={navigation} />
-
-                </View>
-
-            </ScrollView>
-
-        </SafeAreaView>
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#3f51b5" />
+        <Text style={styles.loadingText}>Loading rooms...</Text>
+      </View>
     );
-};
+  }
 
+  // Handle errors
+  if (error) {
+    return (
+      <View style={styles.errorContainer}>
+        <Text style={styles.errorText}>{error}</Text>
+      </View>
+    );
+  }
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <Header title="Lexus NU" />
+
+        <View style={styles.bodyContainer}>
+
+        {rooms.map((roomCategory, index) => (
+          <RoomsContainer
+            key={index}
+            roomType={roomCategory.type}
+            roomTypeId = {roomCategory.id}
+            roomName={roomCategory.name}
+            rooms={roomCategory.data}
+            navigation={navigation}
+          />
+        ))}
+
+        </View>
+
+      </ScrollView>
+    </SafeAreaView>
+  );
+};

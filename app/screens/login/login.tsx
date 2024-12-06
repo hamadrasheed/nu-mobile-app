@@ -7,11 +7,13 @@ import {
   StyleSheet,
   Alert,
   ActivityIndicator,
+  SafeAreaView
 } from 'react-native';
 import { loginUser } from '../../../context/authSlice';
 import { useRouter } from 'expo-router';
 
 import { useSelector, useDispatch } from 'react-redux';
+import { Header } from '@/components/header/header';
 
 const LoginScreen = () => {
 
@@ -48,7 +50,13 @@ const LoginScreen = () => {
   const { loading } = isLogin;
 
   return (
+
+    <SafeAreaView style={styles.HeaderContainer}>
+      <Header title="Lexus NU" />
+
     <View style={styles.container}>
+      
+
       <Text style={styles.title}>Login</Text>
       <TextInput
         style={styles.input}
@@ -69,10 +77,17 @@ const LoginScreen = () => {
         {loading ? <ActivityIndicator color="#fff" /> : <Text style={styles.buttonText}>Login</Text>}
       </TouchableOpacity>
     </View>
+
+    </SafeAreaView>
+
+    
   );
 };
 
 const styles = StyleSheet.create({
+  HeaderContainer: {
+    flex: 1,
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
