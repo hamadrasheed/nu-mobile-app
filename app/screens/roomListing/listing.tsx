@@ -1,21 +1,21 @@
 import React, { useEffect } from 'react';
 import { View, Text, FlatList, Image, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchRoomsByType } from '../../../context/roomSlice'; // Import the new thunk
+import { fetchRoomsByType } from '../../../context/roomSlice';
 import { styles as customStyles } from './style';
-import { Ionicons } from '@expo/vector-icons'; // For Back Icon
+import { Ionicons } from '@expo/vector-icons'; 
 import { routes } from '@/app/navigation/routes';
 
 export const ListingScreen = ({ route, navigation }) => {
   const dispatch = useDispatch();
-  const { filteredRooms, loading, error } = useSelector((state: any) => state.rooms); // Select filtered rooms from Redux store
-  // console.log('filteredRooms',filteredRooms);
+  const { filteredRooms, loading, error } = useSelector((state: any) => state.rooms); 
+
   const dynamicNameMapper = {
     executive: 'Executive',
     delux: 'Delux',
     standard: 'Standard',
   };
-  console.log('route?.params',route?.params);
+
   const roomName = dynamicNameMapper[`${route?.params?.roomType}`] || 'Rooms';
 
   useEffect(() => {

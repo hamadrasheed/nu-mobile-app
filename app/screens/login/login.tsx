@@ -10,23 +10,20 @@ import {
   SafeAreaView
 } from 'react-native';
 import { loginUser } from '../../../context/authSlice';
-import { useRouter } from 'expo-router';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { Header } from '@/components/header/header';
+import { routes } from '@/app/navigation/routes';
 
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }) => {
 
 
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const router = useRouter();
   const dispatch = useDispatch();
 
   const isLogin = useSelector((selector: any) => selector.auth);
-
-
 
   const handleLogin = async () => {
 
@@ -39,8 +36,8 @@ const LoginScreen = () => {
 
     if (loginUser.fulfilled.match(resultAction)) {      
       Alert.alert('Success', 'Login Successful');
-      setTimeout(() => router.push('/'), 1000);
-      router.push('/');
+      navigation.navigate(routes.HOMETAB);
+
     } else {
       Alert.alert('Error', resultAction.payload || 'Login failed');
     }

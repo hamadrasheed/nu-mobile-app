@@ -3,11 +3,14 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 // import moduleName from '../screens';
 import { routes } from '../../app/navigation/routes'; // Ensure this points to your routes file
+import { useDispatch, useSelector } from 'react-redux';
 
 import { useNavigation } from '@react-navigation/native';
 
 const BottomNavBar = () => {
+
   const navigation: any = useNavigation();
+  const { token } = useSelector((state: any) => state.auth);
 
   return (
     <View style={styles.navbar}>
@@ -17,22 +20,39 @@ const BottomNavBar = () => {
         <Text style={styles.navText}>Rooms</Text>
       </TouchableOpacity>
 
-      {/* Login Button */}
-      <TouchableOpacity style={styles.navItem} 
-        onPress={() => navigation.navigate(routes.LOGIN)}
-      >
-        <Ionicons name="log-in-outline" size={24} color="#fff" />
-        <Text style={styles.navText}>Login</Text>
-      </TouchableOpacity>
+      {!token && (
+        <>
+          {/* Login Button */}
+          <TouchableOpacity
+            style={styles.navItem}
+            onPress={() => navigation.navigate(routes.LOGIN)}
+          >
+            <Ionicons name="log-in-outline" size={24} color="#fff" />
+            <Text style={styles.navText}>Login</Text>
+          </TouchableOpacity>
 
-      {/* Register Button */}
-      <TouchableOpacity
-        style={styles.navItem}
-        onPress={() => navigation.navigate(routes.REGISTER)} // Ensure routes.REGISTER points to your Register screen
-      >
-        <Ionicons name="person-add-outline" size={24} color="#fff" />
-        <Text style={styles.navText}>Register</Text>
-      </TouchableOpacity>
+          {/* Register Button */}
+          <TouchableOpacity
+            style={styles.navItem}
+            onPress={() => navigation.navigate(routes.REGISTER)} // Ensure routes.REGISTER points to your Register screen
+          >
+            <Ionicons name="person-add-outline" size={24} color="#fff" />
+            <Text style={styles.navText}>Register</Text>
+          </TouchableOpacity>
+        </>
+      )}
+
+      {token && (
+        <TouchableOpacity
+          style={styles.navItem}
+          onPress={() => navigation.navigate(routes.BOOKINGSCREEN)} // Ensure routes.MY_BOOKINGS points to your bookings screen
+        >
+          <Ionicons name="book-outline" size={24} color="#fff" />
+          <Text style={styles.navText}>My Bookings</Text>
+        </TouchableOpacity>
+      )}
+
+
 
     </View>
   );

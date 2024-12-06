@@ -6,6 +6,8 @@ export const routes = {
   ROOMLIST: 'RoomListingScreen',
   ROOMDETAIL: 'RoomDetailScreen',
   ROOMAVAILABLE: 'RoomAvailableScreen',
+  BOOKINGSCREEN: 'BookingsScreen',
+  PROFILESCREEN: 'ProfileScreen',
   HOMETAB: 'HomeTabScreen', // HomeListing
   //
   PROFILETAB: 'ProfieTabScreen',

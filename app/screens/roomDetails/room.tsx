@@ -1,6 +1,6 @@
 //
 import React from 'react';
-import { View, Text, StyleSheet, Image, ScrollView, SafeAreaView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, Alert, ScrollView, SafeAreaView, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 
@@ -12,9 +12,15 @@ import { routes } from '@/app/navigation/routes';
 export const RoomDetailsScreen = ({ route, navigation }) => {
 
   const { room } = route.params;
+  const { token } = useSelector((state: any) => state.auth);
 
   const onClickCheckAvailablity = () => {
-      navigation.navigate(routes.ROOMAVAILABLE, { room });
+    if(!token) {
+      Alert.alert('Error', 'Please you need to login first to check availablity');
+      navigation.navigate(routes.LOGIN, {});
+      return;
+    }
+    navigation.navigate(routes.ROOMAVAILABLE, { room });
   }
 
   return (

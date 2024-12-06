@@ -9,6 +9,8 @@ import { RoomDetailsScreen } from '../screens/roomDetails/room';
 import { ListingScreen } from '../screens/roomListing/listing';
 import { RegisterPage } from '../screens/register/register';
 import { DateSelectionScreen } from '../screens/roomAvailablity/roomAvailablity';
+import { MyBookings } from '../screens/bookings/bookings';
+import { ProfileScreen } from '../screens/profile/profile';
 
 const Stack: any = createNativeStackNavigator();
 
@@ -23,6 +25,8 @@ const HomeNavigator = () => {
       <Stack.Screen name={routes.ROOMLIST} component={ListingScreen} />
       <Stack.Screen name={routes.ROOMDETAIL} component={RoomDetailsScreen} />
       <Stack.Screen name={routes.ROOMAVAILABLE} component={DateSelectionScreen} />
+      <Stack.Screen name={routes.BOOKINGSCREEN} component={MyBookings} />
+      <Stack.Screen name={routes.PROFILESCREEN} component={ProfileScreen} />
 
 
     </Stack.Navigator>

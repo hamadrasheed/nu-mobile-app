@@ -1,3 +1,4 @@
+import { routes } from '@/app/navigation/routes';
 import { Header } from '@/components/header/header';
 import React, { useState } from 'react';
 import {
@@ -10,13 +11,20 @@ import {
   ScrollView,
   SafeAreaView
 } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
+import { registerUser } from '../../../context/authSlice';
 
-export const RegisterPage = () => {
+export const RegisterPage = ({ navigation }) => {
+
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [userType, setUserType] = useState('guest'); // Default selection
   const [password, setPassword] = useState('');
+
+  const dispatch = useDispatch();
+
+  const {} = useSelector((selector: any) => selector.auth);
 
   const validateEmail = (email: string) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -24,10 +32,10 @@ export const RegisterPage = () => {
   };
 
   const validatePassword = (password: string) => {
-    return password.length >= 8;
+    return password.length >= 6;
   };
 
-  const handleSignup = () => {
+  const handleSignup = async () => {
     if (!firstName.trim()) {
       Alert.alert('Validation Error', 'First name is required.');
       return;
@@ -43,12 +51,21 @@ export const RegisterPage = () => {
     if (!validatePassword(password)) {
       Alert.alert(
         'Validation Error',
-        'Password must be at least 8 characters long.'
+        'Password must be at least 6 characters long.'
       );
       return;
     }
 
-    Alert.alert('Success', `Welcome ${firstName} ${lastName}!`);
+    const resultAction = await dispatch(registerUser({ email, password, firstName, lastName, roleSlug: userType }));
+
+    if (registerUser.fulfilled.match(resultAction)) {      
+      Alert.alert('Success', `Please login to Continue!`);
+      navigation.navigate(routes.LOGIN);
+
+    } else {
+      Alert.alert('Error', resultAction.payload || 'Registration failed');
+    }
+
 
   };
 
@@ -95,7 +112,7 @@ export const RegisterPage = () => {
         />
 
         {/* Radio Buttons for User Type */}
-  {/*       
+        {/*       
         <View style={styles.radioGroup}>
           <TouchableOpacity
             style={styles.radioButton}
