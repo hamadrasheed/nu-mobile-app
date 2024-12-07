@@ -11,6 +11,8 @@ import { RegisterPage } from '../screens/register/register';
 import { DateSelectionScreen } from '../screens/roomAvailablity/roomAvailablity';
 import { MyBookings } from '../screens/bookings/bookings';
 import { ProfileScreen } from '../screens/profile/profile';
+import { RoomBookingScreen } from '../screens/roomBooking/roomBooking';
+import { StaffBookingsScreen } from '../screens/staff/staffCleaning';
 
 const Stack: any = createNativeStackNavigator();
 
@@ -27,7 +29,9 @@ const HomeNavigator = () => {
       <Stack.Screen name={routes.ROOMAVAILABLE} component={DateSelectionScreen} />
       <Stack.Screen name={routes.BOOKINGSCREEN} component={MyBookings} />
       <Stack.Screen name={routes.PROFILESCREEN} component={ProfileScreen} />
-
+      <Stack.Screen name={routes.ROOMBOOKINGSCREEN} component={RoomBookingScreen} />
+      <Stack.Screen name={routes.STAFFBOOKINGSCREEN} component={StaffBookingsScreen} />
+      
 
     </Stack.Navigator>
   );

@@ -10,8 +10,8 @@ import { useNavigation } from '@react-navigation/native';
 const BottomNavBar = () => {
 
   const navigation: any = useNavigation();
-  const { token } = useSelector((state: any) => state.auth);
-
+  const { token, user } = useSelector((state: any) => state.auth);
+  console.log('user',user?.role?.slug);
   return (
     <View style={styles.navbar}>
       {/* Home Button */}
@@ -42,7 +42,7 @@ const BottomNavBar = () => {
         </>
       )}
 
-      {token && (
+      {token && user?.role?.slug === 'guest' && (
         <TouchableOpacity
           style={styles.navItem}
           onPress={() => navigation.navigate(routes.BOOKINGSCREEN)} // Ensure routes.MY_BOOKINGS points to your bookings screen
@@ -51,6 +51,18 @@ const BottomNavBar = () => {
           <Text style={styles.navText}>My Bookings</Text>
         </TouchableOpacity>
       )}
+
+      {
+        user?.role?.slug === 'staff' && (
+          <TouchableOpacity
+          style={styles.navItem}
+          onPress={() => navigation.navigate(routes.STAFFBOOKINGSCREEN)} // Ensure routes.MY_BOOKINGS points to your bookings screen
+        >
+          <Ionicons name="book-outline" size={24} color="#fff" />
+          <Text style={styles.navText}>Checkout Rooms</Text>
+        </TouchableOpacity>
+        )
+      }
 
 
 
@@ -67,7 +79,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#3f51b5',
     height: 60,
-    position: 'absolute',
+    position: 'relative',
     bottom: 0,
     width: '100%',
   },

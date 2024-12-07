@@ -8,6 +8,8 @@ export const routes = {
   ROOMAVAILABLE: 'RoomAvailableScreen',
   BOOKINGSCREEN: 'BookingsScreen',
   PROFILESCREEN: 'ProfileScreen',
+  ROOMBOOKINGSCREEN: 'RoomBookingScreen',
+  STAFFBOOKINGSCREEN: 'StaffBookingRoomScreen',
   HOMETAB: 'HomeTabScreen', // HomeListing
   //
   PROFILETAB: 'ProfieTabScreen',

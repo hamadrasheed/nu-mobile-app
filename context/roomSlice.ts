@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import * as SecureStore from 'expo-secure-store';
 
 // Fetch all rooms
 export const fetchRooms: any = createAsyncThunk(
@@ -28,11 +29,62 @@ export const fetchRoomsByType: any = createAsyncThunk(
     }
 );
 
+export const bookRoom = createAsyncThunk(
+    'rooms/bookRoom',
+    async ({
+        roomId,
+        checkInDate,
+        checkOutDate,
+        paymentVia,
+        totalPaid,
+        totalDays,
+    }: any, { rejectWithValue }) => {
+        try {
+
+            const token = await SecureStore.getItemAsync('user_token');
+
+            const response = await axios.post(`${process.env.EXPO_PUBLIC_SERVER_URL}/bookings`, {
+                roomId,
+                checkInDate,
+                checkOutDate,
+                paymentVia,
+                totalPaid,
+                totalDays,
+            }, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            return response.data; // Expected success response
+        } catch (error) {
+            return rejectWithValue(error.response?.data?.message || 'Booking failed');
+        }
+    }
+);
+
+export const fetchCheckedOutBookings: any = createAsyncThunk(
+    'bookings/fetchCheckedOutBookings',
+    async ({status}: any, { rejectWithValue }) => {
+        try {
+            console.log('checkedOut id',status);
+            const token = await SecureStore.getItemAsync('user_token');
+
+            const response = await axios.get(`${process.env.EXPO_PUBLIC_SERVER_URL}/bookings/staff`, {
+                // data: {status},
+                params: {status},
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            return response.data.data; // Replace with the actual data structure from your API
+        } catch (error) {
+            return rejectWithValue(error.response?.data?.message || 'Failed to fetch bookings');
+        }
+    }
+);
+
 const roomsSlice = createSlice({
     name: 'rooms',
     initialState: {
         rooms: [], // All rooms data
         filteredRooms: [], // Rooms filtered by type
+        checkOutRooms: [],
         loading: false,
         error: null,
     },
@@ -62,6 +114,31 @@ const roomsSlice = createSlice({
                 state.filteredRooms = action.payload;
             })
             .addCase(fetchRoomsByType.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
+            // book a room
+            .addCase(bookRoom.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(bookRoom.fulfilled, (state, action) => {
+                state.loading = false;
+            })
+            .addCase(bookRoom.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
+            // checkout rooms
+            .addCase(fetchCheckedOutBookings.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(fetchCheckedOutBookings.fulfilled, (state, action) => {
+                state.loading = false;
+                state.checkOutRooms = action.payload;
+            })
+            .addCase(fetchCheckedOutBookings.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
             });
