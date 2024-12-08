@@ -62,19 +62,35 @@ export const bookRoom = createAsyncThunk(
 
 export const fetchCheckedOutBookings: any = createAsyncThunk(
     'bookings/fetchCheckedOutBookings',
-    async ({status}: any, { rejectWithValue }) => {
+    async ({ status }: any, { rejectWithValue }) => {
         try {
 
             const token = await SecureStore.getItemAsync('user_token');
 
             const response = await axios.get(`${process.env.EXPO_PUBLIC_SERVER_URL}/bookings/staff`, {
                 // data: {status},
-                params: {status},
+                params: { status },
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             return response.data.data; // Replace with the actual data structure from your API
         } catch (error) {
             return rejectWithValue(error.response?.data?.message || 'Failed to fetch bookings');
+        }
+    }
+);
+
+export const createRoom: any = createAsyncThunk(
+    'rooms/createRoom',
+    async (roomData, { rejectWithValue }) => {
+        try {
+            const token = await SecureStore.getItemAsync('user_token');
+
+            const response = await axios.post(`${process.env.EXPO_PUBLIC_SERVER_URL}/rooms`, roomData, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            return response.data; // Assuming the API returns the created room
+        } catch (error) {
+            return rejectWithValue(error.response?.data?.message || 'Failed to create room');
         }
     }
 );
@@ -141,7 +157,19 @@ const roomsSlice = createSlice({
             .addCase(fetchCheckedOutBookings.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
-            });
+            })
+            //create room
+            .addCase(createRoom.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(createRoom.fulfilled, (state, action) => {
+                state.loading = false;
+            })
+            .addCase(createRoom.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            });;
     },
 });
 

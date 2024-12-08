@@ -12,10 +12,10 @@ import { routes } from '@/app/navigation/routes';
 export const RoomDetailsScreen = ({ route, navigation }) => {
 
   const { room } = route.params;
-  const { token } = useSelector((state: any) => state.auth);
+  const { token, user } = useSelector((state: any) => state.auth);
 
   const onClickCheckAvailablity = () => {
-    if(!token) {
+    if (!token) {
       Alert.alert('Error', 'Please you need to login first to check availablity');
       navigation.navigate(routes.LOGIN, {});
       return;
@@ -42,13 +42,16 @@ export const RoomDetailsScreen = ({ route, navigation }) => {
         <Text style={styles.sectionTitle}>Description</Text>
         <Text style={styles.description}>{room.description}</Text>
         <Text style={styles.sectionTitle}>Amenities</Text>
-          {room.freeWifi && <Text style={styles.amenity}>✔️ Free WiFi</Text>}
-          {room.freeCancellation && <Text style={styles.amenity}>✔️ Free Cancellation</Text>}
-          {room.breakfastIncluded && <Text style={styles.amenity}>✔️ Free Breakfast</Text>}
+        {room.freeWifi && <Text style={styles.amenity}>✔️ Free WiFi</Text>}
+        {room.freeCancellation && <Text style={styles.amenity}>✔️ Free Cancellation</Text>}
+        {room.breakfastIncluded && <Text style={styles.amenity}>✔️ Free Breakfast</Text>}
 
-        <TouchableOpacity style={styles.button} onPress={() => onClickCheckAvailablity()}>
-          <Text style={styles.buttonText}>Check Availablity</Text>
-        </TouchableOpacity>
+        {user?.role?.slug == 'guest' && (
+          <TouchableOpacity style={styles.button} onPress={() => onClickCheckAvailablity()}>
+            <Text style={styles.buttonText}>Check Availablity</Text>
+          </TouchableOpacity>
+
+        )}
       </ScrollView>
     </SafeAreaView>
   );
@@ -124,9 +127,9 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',
-},
-buttonText: {
+  },
+  buttonText: {
     color: '#fff',
     fontWeight: 'bold',
-},
+  },
 });

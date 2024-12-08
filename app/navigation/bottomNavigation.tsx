@@ -70,6 +70,14 @@ const BottomNavBar = () => {
 
             <TouchableOpacity
               style={styles.navItem}
+              onPress={() => navigation.navigate(routes.CREATEBOOKINGSCREEN)} // Ensure routes.REGISTER points to your Register screen
+            >
+              <Ionicons name="add" size={24} color="#fff" />
+              <Text style={styles.navText}>Create Room</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.navItem}
               onPress={() => navigation.navigate(routes.BOOKINGSCREEN)} // Ensure routes.MY_BOOKINGS points to your bookings screen
             >
               <Ionicons name="book-outline" size={24} color="#fff" />
@@ -83,6 +91,8 @@ const BottomNavBar = () => {
               <Ionicons name="person-add-outline" size={24} color="#fff" />
               <Text style={styles.navText}>Create Staff</Text>
             </TouchableOpacity>
+
+
           </>
 
         )

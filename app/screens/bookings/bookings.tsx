@@ -20,12 +20,7 @@ export const MyBookings = ({ navigation }) => {
     const { user } = useSelector((state: any) => state.auth); // Get user info from Redux
 
     useEffect(() => {
-        // Fetch bookings based on user role
-        // if (user?.role?.slug === 'admin') {
-        //     dispatch(fetchAllBookings());
-        // } else {
-            dispatch(fetchUserBookings());
-        // }
+        dispatch(fetchUserBookings());
     }, [dispatch, user?.role?.slug]);
 
     const renderBooking = ({ item }) => {
@@ -152,106 +147,105 @@ export default MyBookings;
 
 export const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      backgroundColor: '#f8f8f8',
-      padding: 20,
+        flex: 1,
+        backgroundColor: '#f8f8f8',
+        padding: 20,
     },
     listContent: {
-      paddingBottom: 20,
+        paddingBottom: 20,
     },
     loadingContainer: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     loadingText: {
-      marginTop: 10,
-      fontSize: 16,
-      color: '#777',
+        marginTop: 10,
+        fontSize: 16,
+        color: '#777',
     },
     errorContainer: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     errorText: {
-      fontSize: 16,
-      color: '#ff0000',
+        fontSize: 16,
+        color: '#ff0000',
     },
     emptyContainer: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     emptyText: {
-      fontSize: 16,
-      color: '#555',
+        fontSize: 16,
+        color: '#555',
     },
     card: {
-      marginBottom: 20,
-      backgroundColor: '#fff',
-      borderRadius: 10,
-      padding: 15,
-      elevation: 3,
+        marginBottom: 20,
+        backgroundColor: '#fff',
+        borderRadius: 10,
+        padding: 15,
+        elevation: 3,
     },
     image: {
-      width: '100%',
-      height: 150,
-      borderRadius: 10,
-      marginBottom: 10,
+        width: '100%',
+        height: 150,
+        borderRadius: 10,
+        marginBottom: 10,
     },
     info: {
-      padding: 10,
+        padding: 10,
     },
     name: {
-      fontSize: 18,
-      fontWeight: 'bold',
-      marginBottom: 5,
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 5,
     },
     detail: {
-      fontSize: 14,
-      marginBottom: 5,
-      color: '#555',
+        fontSize: 14,
+        marginBottom: 5,
+        color: '#555',
     },
     date: {
-      fontSize: 14,
-      color: '#888',
+        fontSize: 14,
+        color: '#888',
     },
     status: {
-      fontSize: 14,
-      fontWeight: 'bold',
-      marginTop: 5,
-      color: colors.BLUE,
+        fontSize: 14,
+        fontWeight: 'bold',
+        marginTop: 5,
+        color: colors.BLUE,
     },
     buttonContainer: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      marginTop: 15,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 15,
     },
     actionButton: {
-      backgroundColor: colors.BLUE,
-      padding: 10,
-      borderRadius: 5,
-      width: '48%',
-      alignItems: 'center',
+        backgroundColor: colors.BLUE,
+        padding: 10,
+        borderRadius: 5,
+        width: '48%',
+        alignItems: 'center',
     },
     cancelButton: {
-      backgroundColor: '#d9534f',
-      padding: 10,
-      borderRadius: 5,
-      width: '48%',
-      alignItems: 'center',
+        backgroundColor: '#d9534f',
+        padding: 10,
+        borderRadius: 5,
+        width: '48%',
+        alignItems: 'center',
     },
     actionButtonText: {
-      color: '#fff',
-      fontSize: 14,
-      fontWeight: 'bold',
+        color: '#fff',
+        fontSize: 14,
+        fontWeight: 'bold',
     },
     disabledButton: {
-      backgroundColor: '#ccc',
+        backgroundColor: '#ccc',
     },
     disabledButtonText: {
-      color: '#999',
+        color: '#999',
     },
-  });
-  
+});
