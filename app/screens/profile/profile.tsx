@@ -69,9 +69,11 @@ export const ProfileScreen = ({ navigation }) => {
         <Text style={styles.logoutText}>Log Out</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.deactivateButton} onPress={handleDeactivateAccount}>
-        <Text style={styles.deactivateText}>Deactivate Account</Text>
-      </TouchableOpacity>
+      {user?.role?.slug == 'guest' && (
+        <TouchableOpacity style={styles.deactivateButton} onPress={handleDeactivateAccount}>
+          <Text style={styles.deactivateText}>Deactivate Account</Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
