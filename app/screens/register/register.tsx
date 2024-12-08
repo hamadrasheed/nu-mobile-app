@@ -1,6 +1,6 @@
 import { routes } from '@/app/navigation/routes';
 import { Header } from '@/components/header/header';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -21,10 +21,21 @@ export const RegisterPage = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [userType, setUserType] = useState('guest'); // Default selection
   const [password, setPassword] = useState('');
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const dispatch = useDispatch();
 
-  const {} = useSelector((selector: any) => selector.auth);
+  const { user } = useSelector((state: any) => state.auth);
+  
+  useEffect(() => {
+    
+    if (user?.role?.slug == 'admin') {
+      setIsAdmin(true);
+      setUserType('staff');
+    }
+
+  }, [user?.role?.slug]);
+
 
   const validateEmail = (email: string) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -58,7 +69,12 @@ export const RegisterPage = ({ navigation }) => {
 
     const resultAction = await dispatch(registerUser({ email, password, firstName, lastName, roleSlug: userType }));
 
-    if (registerUser.fulfilled.match(resultAction)) {      
+    if (registerUser.fulfilled.match(resultAction)) {     
+      if(isAdmin) {
+        Alert.alert('Success', `New Staff member (${firstName} ${lastName}) registered successfuly!`);
+        return;
+      } 
+      
       Alert.alert('Success', `Please login to Continue!`);
       navigation.navigate(routes.LOGIN);
 
@@ -75,7 +91,7 @@ export const RegisterPage = ({ navigation }) => {
       <Header title="Lexus NU" />
       <ScrollView contentContainerStyle={styles.container}>
 
-        <Text style={styles.title}>Register</Text>
+        <Text style={styles.title}> {isAdmin ? 'Create a Staff Member': 'Register'}</Text>
 
         {/* First Name */}
         <TextInput

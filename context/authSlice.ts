@@ -1,7 +1,28 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
-    
+
+export const deactivateUser: any = createAsyncThunk(
+  'auth/deactivate',
+  async (_, { rejectWithValue }) => {
+    try {
+
+      const token = await SecureStore.getItemAsync('user_token');
+
+      const response = await axios.post(`${process.env.EXPO_PUBLIC_SERVER_URL}/user/deactivate`, {}, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+
+      await SecureStore.setItemAsync('user_token',response?.data?.data?.token);
+
+      return response.data; 
+
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || 'Login failed');
+    }
+  }
+);
+
 export const loginUser: any = createAsyncThunk(
   'auth/loginUser',
   async ({ email, password }: { email: string; password: string }, { rejectWithValue }) => {
@@ -90,6 +111,19 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(registerUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      // deactivateUser
+      .addCase(deactivateUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deactivateUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(deactivateUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

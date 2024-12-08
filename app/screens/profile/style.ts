@@ -1,3 +1,4 @@
+import { colors } from '@/app/themes/colors';
 import {
     StyleSheet,
 } from 'react-native';
@@ -37,7 +38,7 @@ export const styles = StyleSheet.create({
     logoutButton: {
         width: '80%',
         padding: 15,
-        backgroundColor: '#ff4d4d',
+        backgroundColor: colors.BLUE, //'#ff4d4d',
         borderRadius: 10,
         alignItems: 'center',
     },
@@ -46,4 +47,17 @@ export const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#fff',
     },
+    deactivateButton: {
+        width: '80%',
+        backgroundColor: '#d9534f', // Red color for danger action
+        padding: 15,
+        borderRadius: 10,
+        alignItems: 'center',
+        marginTop: 10,
+      },
+      deactivateText: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: 'bold',
+      },
 });

@@ -64,7 +64,7 @@ export const fetchCheckedOutBookings: any = createAsyncThunk(
     'bookings/fetchCheckedOutBookings',
     async ({status}: any, { rejectWithValue }) => {
         try {
-            console.log('checkedOut id',status);
+
             const token = await SecureStore.getItemAsync('user_token');
 
             const response = await axios.get(`${process.env.EXPO_PUBLIC_SERVER_URL}/bookings/staff`, {

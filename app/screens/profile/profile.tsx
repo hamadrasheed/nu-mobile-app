@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, Alert } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { logout } from '../../../context/authSlice'; // Logout action from authSlice
+import { logout, deactivateUser } from '../../../context/authSlice'; // Logout action from authSlice
 import { routes } from '@/app/navigation/routes'; // Ensure routes.LOGIN is defined
 import { styles } from './style';
 
@@ -11,7 +11,34 @@ export const ProfileScreen = ({ navigation }) => {
 
   const handleLogout = () => {
     dispatch(logout()); // Clear token and reset auth state
-    navigation.navigate(routes.HOMETAB); // Redirect to login screen
+    navigation.navigate(routes.HOMETAB); // Redirect to home screen
+  };
+
+  const handleDeactivateAccount = () => {
+    Alert.alert(
+      'Deactivate Account',
+      'Are you sure you want to deactivate your account? This action cannot be undone.',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Deactivate',
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              Alert.alert('Account Deactivated', 'Your account has been deactivated.');
+              dispatch(deactivateUser());
+              dispatch(logout()); // Logout user after deactivation
+              navigation.navigate(routes.HOMETAB);
+            } catch (error) {
+              Alert.alert('Error', 'Failed to deactivate account. Please try again.');
+            }
+          },
+        },
+      ]
+    );
   };
 
   if (!token) {
@@ -40,6 +67,10 @@ export const ProfileScreen = ({ navigation }) => {
 
       <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
         <Text style={styles.logoutText}>Log Out</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.deactivateButton} onPress={handleDeactivateAccount}>
+        <Text style={styles.deactivateText}>Deactivate Account</Text>
       </TouchableOpacity>
     </View>
   );
