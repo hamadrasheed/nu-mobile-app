@@ -12,7 +12,7 @@ import {
 import { useDispatch } from 'react-redux';
 import { bookRoom } from '../../../context/roomSlice'; // Redux action to handle room booking
 import { routes } from '@/app/navigation/routes';
-import { Header } from '@/components/header/header';
+import { Header } from '@/app/component/header/header';
 
 export const RoomBookingScreen = ({ route, navigation }) => {
     const dispatch: any = useDispatch();

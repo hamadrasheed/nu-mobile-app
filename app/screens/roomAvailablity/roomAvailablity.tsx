@@ -8,10 +8,10 @@ import {
   Alert,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { Header } from '@/components/header/header';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { routes } from '@/app/navigation/routes';
+import { Header } from '@/app/component/header/header';
 
 export const DateSelectionScreen = ({ route, navigation }) => {
 

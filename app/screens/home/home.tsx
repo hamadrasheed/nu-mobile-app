@@ -9,8 +9,8 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchRooms } from '../../../context/roomSlice'; 
 import { styles } from './style';
-import { Header } from '@/components/header/header';
-import { RoomsContainer } from '../../../components/roomContainer/homeContainers';
+import { Header } from '@/app/component/header/header';
+import { RoomsContainer } from '@/app/component/roomContainer/homeContainers';
 
 export const HomeListing = ({ navigation }) => {
   const dispatch = useDispatch();

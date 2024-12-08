@@ -12,7 +12,7 @@ import {
 import { loginUser } from '../../../context/authSlice';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { Header } from '@/components/header/header';
+import { Header } from '@/app/component/header/header';
 import { routes } from '@/app/navigation/routes';
 
 const LoginScreen = ({ navigation }) => {

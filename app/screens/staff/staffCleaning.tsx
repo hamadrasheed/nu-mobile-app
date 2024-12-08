@@ -11,7 +11,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCheckedOutBookings } from '../../../context/roomSlice';
 import { updateBookingStatus } from '../../../context/bookingSlice';
-import { Header } from '@/components/header/header';
+import { Header } from '@/app/component/header/header';
 
 export const StaffBookingsScreen = () => {
     const dispatch = useDispatch();

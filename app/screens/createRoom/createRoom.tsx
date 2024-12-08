@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { useDispatch } from "react-redux";
 import { createRoom } from "../../../context/roomSlice"; // Action to create a room
-import { Header } from "@/components/header/header";
+import { Header } from '@/app/component/header/header';
 
 export const CreateRoomScreen = ({ navigation }) => {
     const dispatch = useDispatch();

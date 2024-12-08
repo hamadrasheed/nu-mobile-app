@@ -1,5 +1,4 @@
 import { routes } from '@/app/navigation/routes';
-import { Header } from '@/components/header/header';
 import React, { useEffect, useState } from 'react';
 import {
   View,
@@ -13,6 +12,7 @@ import {
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { registerUser } from '../../../context/authSlice';
+import { Header } from '@/app/component/header/header';
 
 export const RegisterPage = ({ navigation }) => {
 
@@ -74,7 +74,7 @@ export const RegisterPage = ({ navigation }) => {
         Alert.alert('Success', `New Staff member (${firstName} ${lastName}) registered successfuly!`);
         return;
       } 
-      
+
       Alert.alert('Success', `Please login to Continue!`);
       navigation.navigate(routes.LOGIN);
 

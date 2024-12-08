@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUserBookings } from '../../../context/bookingSlice'; // Redux actions for fetching bookings
-import { Header } from '@/components/header/header';
+import { Header } from '@/app/component/header/header';
 import { colors } from '@/app/themes/colors';
 
 export const MyBookings = ({ navigation }) => {
